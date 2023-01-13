@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const joi = require("joi");
+const path = require("path");
 // 创建express的服务器实例;
 const app = express();
 // 导入配置文件
@@ -33,9 +34,11 @@ app.use(function (req, res, next) {
 // 使用 .unless({ path: [/^\/api\//] }) 指定哪些接口不需要进行 Token 的身份认证
 app.use(
 	jwt({ secret: config.jwtSecretKey, algorithms: ["HS256"] }).unless({
-		path: [/^\/api\//],
+		path: [/^\/user\//],
 	}),
 );
+
+app.use(express.static("./public"));
 
 // 首页
 const indexRouter = require("./router/index");
