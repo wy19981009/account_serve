@@ -4,10 +4,13 @@ const {
 	updateUserInfoHandler,
 	updatePasswordHandler,
 	updateAvatarHandler,
+	updateSignatureHandler,
+	logoutHandler,
 } = require("../router_handler/userinfo");
 const {
 	update_userinfo_check,
 	update_password_check,
+	update_signature_check,
 } = require("../checking/user");
 const expressJoi = require("@escook/express-joi");
 const multer = require("multer");
@@ -18,6 +21,13 @@ const router = express.Router();
 
 // 获取用户信息
 router.get("/userinfo", getUserInfoHandler);
+
+// 修改个性签名
+router.post(
+	"/updatesignature",
+	expressJoi(update_signature_check),
+	updateSignatureHandler,
+);
 
 // 更新用户信息
 router.post(
@@ -48,5 +58,8 @@ const avatar = multer({
 });
 // 修改头像
 router.post("/update/avatar", avatar.single("avatar"), updateAvatarHandler);
+
+// 退出登录
+router.get("/logout", logoutHandler);
 
 module.exports = router;

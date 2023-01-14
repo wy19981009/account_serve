@@ -23,7 +23,7 @@ exports.loginHandler = (req, res) => {
 	const sql = `select * from ac_user where username = ?`;
 	db.query(sql, userinfo.username, (err, results) => {
 		if (err) return res.cc(err);
-		if (results.length !== 1) return res.cc("登陆失败！");
+		if (results.length !== 1) return res.cc("您的用户名未注册！");
 		if (results[0].password !== userinfo.password) return res.cc("密码错误！");
 		const user = { ...results[0], password: "", avatar: "" };
 		// 生成token
@@ -31,7 +31,7 @@ exports.loginHandler = (req, res) => {
 		res.send({
 			status: 200,
 			message: "登录成功!",
-			data: "Bearer " + tokenStr,
+			token: "Bearer " + tokenStr,
 		});
 	});
 };

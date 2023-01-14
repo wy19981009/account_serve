@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 // 使用 .unless({ path: [/^\/api\//] }) 指定哪些接口不需要进行 Token 的身份认证
 app.use(
 	jwt({ secret: config.jwtSecretKey, algorithms: ["HS256"] }).unless({
-		path: [/^\/user\//],
+		path: [/^\/user\/|^\/img\//],
 	}),
 );
 

@@ -2,7 +2,7 @@ const db = require("../db");
 
 // 获取用户基本信息
 exports.getUserInfoHandler = (req, res) => {
-	const sql = `select id, username, nickname, phone, avatar from ac_user where id = ?`;
+	const sql = `select id, username, nickname, phone, avatar, signature from ac_user where id = ?`;
 	db.query(sql, req.auth.id, (err, results) => {
 		if (err) return res.cc(err);
 		if (results.length !== 1) return res.cc("获取用户信息失败！");
@@ -11,6 +11,16 @@ exports.getUserInfoHandler = (req, res) => {
 			message: "获取用户基本信息成功！",
 			data: results,
 		});
+	});
+};
+
+// 修改个性签名
+exports.updateSignatureHandler = (req, res) => {
+	const sql = `update ac_user set signature = ? where id = ?`;
+	db.query(sql, [req.body.signature, req.auth.id], (err, results) => {
+		if (err) return res.cc(err);
+		if (results.affectedRows !== 1) return res.cc("个性签名修改失败！");
+		res.cc("个性签名修改成功！", 200);
 	});
 };
 
@@ -48,4 +58,9 @@ exports.updateAvatarHandler = (req, res) => {
 		if (results.affectedRows !== 1) return res.cc("修改头像失败！");
 		res.cc("修改头像成功！", 200);
 	});
+};
+
+// 退出登录
+exports.logoutHandler = (req, res) => {
+	res.cc("退出登录成功！", 200);
 };

@@ -12,13 +12,13 @@ const joi = require("joi");
 const username = joi.string().alphanum().min(4).max(10).required();
 const password = joi
 	.string()
-	.pattern(/^[\S]{6,12}$/)
+	.pattern(/^[\S]{6,18}$/)
 	.required();
 
 const id = joi.number().integer().min(1).required();
 const nickname = joi.string().required();
 const phone = joi.number().min(10).required();
-const avatar = joi.string().dataUri().required();
+const signature = joi.string().min(1).max(15).required();
 
 // 导出注册和登录表单的验证规则对象
 exports.reg_login_check = {
@@ -46,6 +46,6 @@ exports.update_password_check = {
 	},
 };
 
-// exports.update_avatar_check = {
-// 	param
-// }
+exports.update_signature_check = {
+	body: { signature },
+};
