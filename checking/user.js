@@ -16,7 +16,7 @@ const password = joi
 	.required();
 
 const id = joi.number().integer().min(1).required();
-const nickname = joi.string().required();
+const nickname = joi.string().min(1).max(11).required();
 const phone = joi.number().min(10).required();
 const signature = joi.string().min(1).max(15).required();
 
@@ -33,6 +33,7 @@ exports.update_userinfo_check = {
 		id,
 		nickname,
 		phone,
+		signature,
 	},
 };
 

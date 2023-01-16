@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const joi = require("joi");
 const path = require("path");
+const bodyParser = require("body-parser");
 // 创建express的服务器实例;
 const app = express();
 // 导入配置文件
@@ -15,7 +16,9 @@ const { expressjwt: jwt } = require("express-jwt");
 app.use(cors());
 
 // 解析表单数据
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // 响应数据的中间件
 app.use(function (req, res, next) {
@@ -51,6 +54,10 @@ app.use("/user", userRouter);
 // 获取用户信息
 const userInfoRouter = require("./router/userinfo");
 app.use("/my", userInfoRouter);
+
+// 获取分类列表
+const classifyInfoRouter = require("./router/classify");
+app.use("/classify", classifyInfoRouter);
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
