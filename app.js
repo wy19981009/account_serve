@@ -51,13 +51,17 @@ app.use("/index", indexRouter);
 const userRouter = require("./router/user");
 app.use("/user", userRouter);
 
-// 获取用户信息
+// 用户信息
 const userInfoRouter = require("./router/userinfo");
 app.use("/my", userInfoRouter);
 
-// 获取分类列表
+// 分类列表
 const classifyInfoRouter = require("./router/classify");
 app.use("/classify", classifyInfoRouter);
+
+// 账单
+const accountsRouter = require("./router/accounts");
+app.use("/accounts", accountsRouter);
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
